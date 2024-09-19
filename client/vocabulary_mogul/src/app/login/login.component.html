@@ -1,0 +1,12 @@
+<div class="col-lg-6">
+    <form (ngSubmit)="onSubmit()" id="loginForm">
+        <div class="form">
+            <input type="text" name="username" id="username" placeholder="Username" [(ngModel)]="username" required>
+            <label for="username">Username</label>
+            <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="password" required>
+            <label for="password">Password</label>
+            <button type="submit" class="btn btn-success" >Log In</button>
+        </div>
+    </form>
+    <a class="subheader" href="/register">Don't Have an Account? Click here to Sign Up!</a>
+</div>
