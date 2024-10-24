@@ -5,27 +5,30 @@ import { QuizQuestion } from './quiz-question';
 import { SupabaseService } from './supabase.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class VocabularyList {
     private vocabularySubset: VocabularyDefinition[] = [];
     private distractorCache: { [id: number]: string[] } = {};
 
-    constructor(private supabaseService: SupabaseService) {}
+    constructor(private supabaseService: SupabaseService) { }
 
-    async loadVocabularyForQuiz(): Promise<void> {
+    async loadVocabularyForQuiz(vocabArray?: number[]): Promise<void> {
         try {
+            console.log(vocabArray);
             // Fetch the subset of vocabulary words
-            this.vocabularySubset = await this.supabaseService.getVocabularySubset(this.generateVocabularyNumbers(15, 562));
-    
+            vocabArray ?
+                this.vocabularySubset = await this.supabaseService.getVocabularySubset(vocabArray)
+                :
+                this.vocabularySubset = await this.supabaseService.getVocabularySubset(this.generateVocabularyNumbers(15, 562))
             // Create an array of promises for fetching distractors
             const distractorPromises = this.vocabularySubset.map(async (vocab) => {
                 this.distractorCache[vocab.id] = await this.supabaseService.getDefinitionsById(this.generateVocabularyNumbers(3, 562));
             });
-    
+
             // Wait for all distractor fetches to complete
             await Promise.all(distractorPromises);
-    
+
         } catch (error) {
             console.error("Failed to load vocabulary for quiz:", error);
             // Handle the error appropriately, e.g., show a message to the user
@@ -41,29 +44,34 @@ export class VocabularyList {
     }
 
 
-    getVocabularyQuiz(): QuizQuestion[] {
-        
+    async getVocabularyQuiz(vocabArray?: number[]): Promise<QuizQuestion[]> {
+
         const quizQuestions: QuizQuestion[] = [];
 
-        this.loadVocabularyForQuiz().then(() => {
-        
-            for (const vocab of this.vocabularySubset) {
-                const distractors = this.getCachedDistractors(Number(vocab.id)); // Use cached distractors
-                const options = this.shuffleArray([vocab.definition, ...distractors]); // Include the correct definition and shuffle
-        
-                quizQuestions.push({ 
-                    word: vocab.word, 
-                    options: options, 
-                    correct: vocab.definition 
-                });
-            }
-        });
-        
+
+        if (vocabArray) {
+            await this.loadVocabularyForQuiz(vocabArray)
+        } else {
+            await this.loadVocabularyForQuiz()
+        }
+
+        for (const vocab of this.vocabularySubset) {
+            const distractors = this.getCachedDistractors(Number(vocab.id)); // Use cached distractors
+            const options = this.shuffleArray([vocab.definition, ...distractors]); // Include the correct definition and shuffle
+
+            quizQuestions.push({
+                id: vocab.id,
+                word: vocab.word,
+                options: options,
+                correct: vocab.definition
+            });
+        }
         return quizQuestions;
+
     }
 
     // Utility method to generate unique random numbers
-    private generateVocabularyNumbers(count: number, max: number): number[] {
+    generateVocabularyNumbers(count: number, max: number): number[] {
         const numbers = new Set<number>();
 
         while (numbers.size < count) {
@@ -71,8 +79,8 @@ export class VocabularyList {
             numbers.add(randomNumber);
         }
         return Array.from(numbers);
-    } 
-    
+    }
+
 }
 
 

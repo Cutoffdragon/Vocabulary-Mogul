@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuizQuestion } from '../quiz-question';
 import { VocabularyList } from '../vocab-list';
@@ -10,8 +10,11 @@ import { VocabularyList } from '../vocab-list';
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss']
 })
-export class QuizComponent {
-  vocabularyList: VocabularyList = inject(VocabularyList);
+export class QuizComponent implements OnInit{
+
+  constructor(private vocabularyList: VocabularyList) {}
+
+
   vocabularyQuiz: QuizQuestion[] = [];
   currentQuestionIndex: number = 0;
   resultShown: boolean = false;
@@ -21,8 +24,16 @@ export class QuizComponent {
   finalScore: number = 100;
   showFinalResults: boolean = false;
 
-  constructor() {
-    this.vocabularyQuiz = this.vocabularyList.getVocabularyQuiz();
+  async loadVocabularyQuiz() {
+    try {
+      this.vocabularyQuiz = await this.vocabularyList.getVocabularyQuiz();
+    } catch (error) {
+      console.error('Error loading vocabulary quiz:', error);
+    }
+  }
+
+  ngOnInit(): void {
+    this.loadVocabularyQuiz();
   }
 
   submitAnswer(selectedOption: string) {

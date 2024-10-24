@@ -1,4 +1,5 @@
 export interface AuthModel {
     username: string,
-    password: string
+    password: string,
+    userVocab: number[]
 }
