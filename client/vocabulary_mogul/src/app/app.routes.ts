@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './auth.guard';
 import { UserQuizComponent } from './user.quiz/user.quiz.component';
+import { ReviewQuizComponent } from './review.quiz/review.quiz.component';
 
 export const routes: Routes = [
     {
@@ -43,6 +44,12 @@ export const routes: Routes = [
         path:'user-quiz',
         component: UserQuizComponent,
         title: 'User Quiz',
+        canActivate: [AuthGuard]
+    },
+    {
+        path:'review-quiz',
+        component: ReviewQuizComponent,
+        title: 'Review Quiz',
         canActivate: [AuthGuard]
     }
 

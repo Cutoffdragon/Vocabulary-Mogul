@@ -8,14 +8,15 @@ import { throwError } from 'rxjs';
 import { VocabularyList } from '../vocab-list';
 import { QuizQuestion } from '../quiz-question';
 
+
 @Component({
-  selector: 'app-user.quiz',
+  selector: 'app-review.quiz',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './user.quiz.component.html',
-  styleUrl: './user.quiz.component.scss'
+  templateUrl: './review.quiz.component.html',
+  styleUrl: './review.quiz.component.scss'
 })
-export class UserQuizComponent implements OnInit{
+export class ReviewQuizComponent {
 
   constructor(private http: HttpClient, private router: Router, private vocabularyList: VocabularyList){}
   
@@ -42,7 +43,7 @@ export class UserQuizComponent implements OnInit{
   async ngOnInit(): Promise<void> {
     try {
       // Await the result of the HTTP call
-      const res = await this.http.get<any>(`${this.apiURL}/vocabulary`).toPromise();
+      const res = await this.http.get<any>(`${this.apiURL}/review`).toPromise();
   
       // Assign the result to the userQuizObject
       this.userQuizObject = res['userVocabulary'];
@@ -61,7 +62,6 @@ export class UserQuizComponent implements OnInit{
     const currentQuestion = this.vocabularyQuiz[this.currentQuestionIndex];
     this.correctAnswer = currentQuestion.correct;
     this.isCorrect = selectedOption === this.correctAnswer;
-    if (this.isCorrect) this.updateVocabulary(currentQuestion['id'])
     this.resultMessage = this.isCorrect ? 'Right!' : 'Wrong!';
     this.resultShown = true;
     this.finalScore = this.isCorrect ? this.finalScore : this.finalScore - 6.66;
@@ -84,20 +84,4 @@ export class UserQuizComponent implements OnInit{
     // Additional reset logic if necessary
   }
 
-  updateVocabulary(wordId : number) {
-      this.http.patch(`${this.apiURL}/vocabulary`, {id: wordId})
-      .pipe(
-        catchError(err => {
-          console.error('Error during registration:', err);
-          return throwError(err);
-        })
-      )
-      .subscribe(
-        (res) => {
-          console.log('Updated correct count')
-        }, (err) => {
-          console.log('Failed to update correct count')
-        }
-      )
-    }
-  }
+}

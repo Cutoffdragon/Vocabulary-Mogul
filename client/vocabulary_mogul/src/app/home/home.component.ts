@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from '../login/login.component';
 import { Subscription } from 'rxjs';;
@@ -11,21 +11,19 @@ import { AuthenticationService } from '../auth.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
 
-  private authenticationStaus!: Subscription
+  authenticationStatus!: boolean
   userAuthenticated = false;
 
   constructor(private authenticationService : AuthenticationService){}
 
-  ngOnDestroy(): void {
-    this.authenticationStaus.unsubscribe();
+  ngOnInit(): void {
+    this.authenticationStatus = this.authenticationService.isAuthenticated;
   }
 
-  ngOnInit(): void {
-    this.authenticationStaus = this.authenticationService.getAuthenticationStatus().subscribe(status => {
-      this.userAuthenticated = status;
-    })
+  logout() {
+    this.authenticationService.logout();
   }
 
 }

@@ -1,0 +1,27 @@
+<div *ngIf="vocabularyQuiz.length > 0">
+    <div *ngIf="!resultShown">
+      <h2>{{ vocabularyQuiz[currentQuestionIndex].word }}</h2>
+      <ul>
+        <li *ngFor="let option of vocabularyQuiz[currentQuestionIndex]?.options" (click)="submitAnswer(option)">
+          {{ option }}
+        </li>
+      </ul>
+    </div>
+  
+    <div *ngIf="resultShown">
+      <p>{{ resultMessage }}</p>
+      <p *ngIf="!isCorrect">The correct answer was: {{ correctAnswer }}</p>
+      <button (click)="nextQuestion()">Next</button>
+    </div>
+  </div>
+
+  <div *ngIf="showFinalResults">
+    <p>Final Score:</p>
+    <p>{{ finalScore }}</p>
+    <button (click)="resetQuiz()">Reset Quiz</button>
+  </div>
+  
+  <div *ngIf="vocabularyQuiz?.length === 0">
+    <p>Loading Quiz</p>
+  </div>
+

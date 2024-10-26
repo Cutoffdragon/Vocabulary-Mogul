@@ -36,7 +36,7 @@ module.exports = (app) => {
         try {
 
             userVocab.map((vocab) => {
-                currentVocabulary.push({id: vocab, correctGuesses: 0})
+                currentVocabulary.push({ id: vocab, correctGuesses: 0 })
             })
 
             const findExistingUser = await User.findOne({ username });
@@ -97,7 +97,7 @@ module.exports = (app) => {
         } catch {
             if (!res.headersSent) {
                 res.status(500).json({ error: 'Failed to update vocabulary' });
-              }
+            }
         }
     })
 
@@ -113,71 +113,103 @@ module.exports = (app) => {
         } catch {
             if (!res.headersSent) {
                 res.status(500).json({ error: 'Failed to update vocabulary' });
-              }
+            }
         }
     })
 
     app.patch('/vocabulary', authenticateToken, async (req, res) => {
         const wordId = req.body.id;
-    
+
         // Helper function to generate a unique vocabulary number
         function generateVocabularyNumber(maxNumber, currentVocabulary, reviewVocabulary) {
             const currentVocabIds = currentVocabulary.map(item => item.id);
             const allUsedNumbers = new Set([...currentVocabIds, ...reviewVocabulary]);
-    
+
             let randomNumber;
             do {
                 randomNumber = Math.floor(Math.random() * (maxNumber + 1)); // Generate random number
             } while (allUsedNumbers.has(randomNumber)); // Check if the number is in current or review vocabulary
-    
+
             return randomNumber;
         }
-    
+
         try {
             // Fetch the user data first
             const user = await User.findOne({ _id: req.headers.user_id });
-    
+
             if (!user) return res.status(404).send('User not found');
-    
+
             // Call the function to generate the new word ID
             const newWordId = generateVocabularyNumber(500, user.currentVocabulary, user.reviewVocabulary);
-    
+
             // Step 1: Update correct guesses
             const updatedUser = await User.findOneAndUpdate(
                 { _id: req.headers.user_id, "currentVocabulary.id": wordId },
                 {
                     $set: {
-                        "currentVocabulary.$.correctGuesses": 
+                        "currentVocabulary.$.correctGuesses":
                             // Increment the correct guesses based on current value
                             user.currentVocabulary.find(word => word.id === wordId).correctGuesses + 1
                     }
                 },
                 { new: true } // Return the updated document
             );
-    
+
             // Step 2: Check if correctGuesses has reached 10
             const updatedWord = updatedUser.currentVocabulary.find(word => word.id === wordId);
+
             if (updatedWord.correctGuesses >= 10) {
-                // Move the completed word to reviewVocabulary
+                // Step 2a: Remove the completed word from currentVocabulary
+                await User.updateOne(
+                    { _id: req.headers.user_id },
+                    { $pull: { currentVocabulary: { id: wordId } } } // Remove completed word
+                );
+
+                // Step 2b: Add to reviewVocabulary and add a new word to currentVocabulary
                 await User.updateOne(
                     { _id: req.headers.user_id },
                     {
-                        $pull: { currentVocabulary: { id: wordId } }, // Remove completed word
                         $push: {
-                            reviewVocabulary: { id: wordId }, // Add to reviewVocabulary
+                            reviewVocabulary: wordId, // Add to reviewVocabulary
                             currentVocabulary: { id: newWordId, correctGuesses: 0 } // Add new word to currentVocabulary
                         }
                     }
                 );
             }
-    
+
+
             res.status(200).send('Vocabulary updated');
         } catch (error) {
             console.error(error);
             res.status(500).send('An error occurred while updating vocabulary');
         }
     });
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
+            [array[i], array[j]] = [array[j], array[i]];   // Swap elements
+        }
+        return array;
+    }
     
+
+    app.get('/review', authenticateToken, async (req, res) => {
+
+        try {
+            const user = await User.findById(req.headers.user_id);
+            if (!user) return res.status(404).send('User not found');
+            const shuffledArray = shuffleArray(user.reviewVocabulary)
+            res.json({
+                userVocabulary: shuffledArray.slice(0, 15)
+            })
+        } catch {
+            if (!res.headersSent) {
+                res.status(500).json({ error: 'Failed to update vocabulary' });
+            }
+        }
+    })
+
 
 
 

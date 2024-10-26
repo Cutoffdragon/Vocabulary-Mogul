@@ -4,8 +4,8 @@
         <p class="subheader">Welcome! Select a difficulty to test your knowledge.</p>
         <p class="subheader">Sign in to record your progress and begin your vocabulary journey today.</p>
     </div>
-    <app-login *ngIf="!userAuthenticated"></app-login>
-    <a *ngIf="userAuthenticated">Log Out</a>
+    <app-login *ngIf="!authenticationStatus"></app-login>
+    <button *ngIf="authenticationStatus" (click)="logout()">Log Out</button>
     <div id="difficultyButtons">
         <a href="/quiz"><button class="btn btn-primary">Test your Knowledge!</button></a>
     </div>

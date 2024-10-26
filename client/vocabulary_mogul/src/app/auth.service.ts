@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './environments/environment';
 import { AuthModel } from './auth.model';
@@ -6,6 +6,8 @@ import { catchError } from 'rxjs/operators';
 import { throwError, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { VocabularyList } from './vocab-list';
+import { PLATFORM_ID } from '@angular/core'; // Import PLATFORM_ID
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Injectable({
@@ -15,18 +17,19 @@ import { VocabularyList } from './vocab-list';
 export class AuthenticationService {
 
   private apiURL = environment.apiURL;
-  private authenticationStatus = new Subject<boolean>();
-  private isAuthenticated = false;
+  isAuthenticated = false;
+  platformId = inject(PLATFORM_ID);  // Inject the platformId
+  private token = ''
 
   constructor(private http: HttpClient, private router: Router, private vocabularyList: VocabularyList) {
-    const token = localStorage.getItem('token');
-    this.isAuthenticated = !!token; // Set based on presence of token
-    this.authenticationStatus.next(this.isAuthenticated); // Emit initial status
+    if (isPlatformBrowser(this.platformId)) {
+      this.token = localStorage.getItem('token') || '';
+      this.isAuthenticated = !!this.token; // Set based on presence of token
+    } else {
+      this.router.navigate(['/'])
+    }
   }
 
-  getAuthenticationStatus() {
-    return this.authenticationStatus.asObservable();
-  }
 
   register(username: string, password: string) {
     const userVocab = this.vocabularyList.generateVocabularyNumbers(15, 562)
@@ -45,7 +48,6 @@ export class AuthenticationService {
           localStorage.setItem('username', res.username);
           localStorage.setItem('user_id', res.user_id)
           this.isAuthenticated = true;
-          this.authenticationStatus.next(this.isAuthenticated);
           console.log('Registration successful:', res);
           this.router.navigate(['/profile'])
         }
@@ -82,7 +84,6 @@ export class AuthenticationService {
           localStorage.setItem('username', res.username);
           localStorage.setItem('user_id', res.user_id)
           this.isAuthenticated = true;
-          this.authenticationStatus.next(this.isAuthenticated);
           console.log('Login successful:', res);
           this.router.navigate(['/profile'])
         }
@@ -92,7 +93,6 @@ export class AuthenticationService {
   logout(): void {
     localStorage.clear();
     this.isAuthenticated = false; // Update local status
-    this.authenticationStatus.next(this.isAuthenticated); // Emit new status
     this.router.navigate(['/login']); // Redirect to login page
   }
 
