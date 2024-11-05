@@ -1,12 +1,15 @@
-<div class="col-lg-6">
+<div>
     <form (ngSubmit)="onSubmit()" id="loginForm">
-        <div class="form">
+        <div class="formInputs">
+        <div class="d-flex flex-column">
+            <label class="secondaryFont" for="username">Username</label>
             <input type="text" name="username" id="username" placeholder="Username" [(ngModel)]="username" required>
-            <label for="username">Username</label>
-            <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="password" required>
-            <label for="password">Password</label>
-            <button type="submit" class="btn btn-success" >Log In</button>
         </div>
+        <div class="d-flex flex-column">
+            <label class="secondaryFont" for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="password" required>
+        </div>
+    </div>
+            <button type="submit" class="btn btn-success secondaryFont" id="loginButton">Log In</button>
     </form>
-    <a class="subheader" href="/register">Don't Have an Account? Click here to Sign Up!</a>
 </div>

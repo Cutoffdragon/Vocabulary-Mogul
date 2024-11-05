@@ -49,7 +49,7 @@ export class AuthenticationService {
           localStorage.setItem('user_id', res.user_id)
           this.isAuthenticated = true;
           console.log('Registration successful:', res);
-          this.router.navigate(['/profile'])
+          this.router.navigate(['/'])
         }
       );
 
@@ -85,7 +85,7 @@ export class AuthenticationService {
           localStorage.setItem('user_id', res.user_id)
           this.isAuthenticated = true;
           console.log('Login successful:', res);
-          this.router.navigate(['/profile'])
+          this.router.navigate(['/'])
         }
       );
   }
@@ -93,7 +93,7 @@ export class AuthenticationService {
   logout(): void {
     localStorage.clear();
     this.isAuthenticated = false; // Update local status
-    this.router.navigate(['/login']); // Redirect to login page
+    this.router.navigate(['/']); // Redirect to login page
   }
 
   public get loggedIn(): boolean {

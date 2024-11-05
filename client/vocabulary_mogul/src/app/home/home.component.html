@@ -1,12 +1,31 @@
-<section>
-    <div id="headerDiv">
-        <h1 id="mainHeader">Vocabulary Mogul</h1>
-        <p class="subheader">Welcome! Select a difficulty to test your knowledge.</p>
-        <p class="subheader">Sign in to record your progress and begin your vocabulary journey today.</p>
+<app-navbar></app-navbar>
+<div id="backgroundImg" [ngStyle]="{
+  'background-image': 'url(' + images[backgroundIndex] + ')'}" [ngClass]="fadeClass"></div>
+<div id="overlay"></div>
+<section *ngIf="pageState == 0" class="text-center d-flex align-items-center flex-row" id="heroDiv">
+    <div class="w-50 m-auto p-5">
+        <h1 class="mainHeader mainFont text-shadow">Expand your Lexicon, at no cost to you. Begin your vocabulary
+            journey today.</h1>
+        <h2 class="subHeader mainFont m-5 text-shadow">With over 500 complex vocabulary words, Vocabulary Mogul is a
+            revolutionary tool for
+            writers,
+            teachers, and students.</h2>
+        <h3 class="subHeader mainFont text-shadow quizLink"><a  id='quizAnchor' href="/quiz">Test Your Knowledge!</a></h3>
     </div>
-    <app-login *ngIf="!authenticationStatus"></app-login>
-    <button *ngIf="authenticationStatus" (click)="logout()">Log Out</button>
-    <div id="difficultyButtons">
-        <a href="/quiz"><button class="btn btn-primary">Test your Knowledge!</button></a>
+    <div *ngIf="pageState == 0" class="w-50 m-auto">
+
     </div>
 </section>
+<section *ngIf="pageState == 0" class='text-center' id="login">
+    <div class="d-flex flex-column">
+        <h2 class="mainFont mainHeader">Sign in for a personalized experience</h2>
+        <h3 class="subHeader mainFont"><a class="subheader" id='registerAnchor' href="/register">Don't Have an Account? Click here to Sign Up!</a></h3>
+    </div>
+    <app-login></app-login>
+</section>
+
+<app-login *ngIf="!authenticationStatus && pageState == 1"></app-login>
+<app-register *ngIf="!authenticationStatus && pageState == 2"></app-register>
+<a href="user-quiz" *ngIf="authenticationStatus">User quiz</a>
+<a href="review-quiz" *ngIf="authenticationStatus">Review quiz</a>
+<button *ngIf="authenticationStatus" (click)="logout()">Log Out</button>

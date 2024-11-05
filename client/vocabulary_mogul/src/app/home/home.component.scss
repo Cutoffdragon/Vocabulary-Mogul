@@ -1,0 +1,133 @@
+#heroDiv {
+    position: relative;
+    height: 80vh;
+    z-index: 2;
+    border-bottom: 26px solid black;
+}
+
+#backgroundImg {
+    position: absolute;
+    z-index: 1;
+    background-size: cover;
+    background-position: 'center';
+    background-repeat: 'no-repeat';
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    animation: slide 8s linear infinite;
+    filter: blur(1px); /* Adjust blur amount as needed */
+}
+
+#overlay {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    height: 80vh;
+    background-color: rgb(255, 255, 255, 0.5);
+}
+
+.mainHeader {
+    font-size: 3.5em;
+}
+
+.subHeader {
+    font-size: 2.5em;
+}
+
+.mainBtn {
+    width: 13rem;
+    height: 4rem;
+    color: white;
+    background: #4ae3ff;
+    border: 2px solid white;
+    border-radius: 36px;
+    font-size: 1.4rem;
+}
+
+#login {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 2;
+    background-color: rgb(255, 255, 255, 0.9);
+    height: 20vh;
+}
+
+.mainFont {
+    font-family: "SUSE", serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.secondaryFont {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+.text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.quizLink {
+    transition: .5s all;
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+#quizAnchor {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    transition: .5s all;
+    &:hover {
+        color: #54FC7B;
+        transform: scale(1.1);
+    }
+}
+
+#registerAnchor {
+    text-decoration: none;
+    transition: .5s all;
+    &:hover {
+        color: #54FC7B;
+        transform: scale(1.1);
+    }
+    color: rgb(82, 82, 196);
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+    /* Duration for fade-in */
+}
+
+/* Fade-out effect */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    /* Duration for fade-out */
+}
+
+@keyframes slide {
+    0% {
+        background-position: 0 0;
+        /* Start position */
+    }
+
+    100% {
+        background-position: -100px 0;
+        /* End position, slide to the left */
+    }
+}
+

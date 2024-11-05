@@ -1,0 +1,44 @@
+#navbar {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+    height: 3.8rem;
+    padding: 2rem;
+    position: fixed;
+    background: transparent;
+    z-index: 3;
+}
+
+.navLink {
+    text-align: center;
+    margin: auto;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+
+a {
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: white;
+    text-decoration: none;
+    transition: .3s all;
+
+    &:hover {
+        cursor: pointer;
+        color: #54FC7B;
+        transform: scale(1.1);
+    }
+}
+
+.secondaryFont {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}

@@ -3,7 +3,6 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './auth.guard';
 import { UserQuizComponent } from './user.quiz/user.quiz.component';
 import { ReviewQuizComponent } from './review.quiz/review.quiz.component';
@@ -33,12 +32,6 @@ export const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
         title: 'Register'
-    },
-    {
-        path: 'profile',
-        component: ProfileComponent,
-        title: 'Profile',
-        canActivate: [AuthGuard]
     },
     {
         path:'user-quiz',
