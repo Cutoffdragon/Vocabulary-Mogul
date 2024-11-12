@@ -1,27 +1,30 @@
-<div *ngIf="vocabularyQuiz.length > 0">
-    <div *ngIf="!resultShown">
-      <h2>{{ vocabularyQuiz[currentQuestionIndex].word }}</h2>
-      <ul>
-        <li *ngFor="let option of vocabularyQuiz[currentQuestionIndex]?.options" (click)="submitAnswer(option)">
-          {{ option }}
-        </li>
-      </ul>
-    </div>
-  
-    <div *ngIf="resultShown">
-      <p>{{ resultMessage }}</p>
-      <p *ngIf="!isCorrect">The correct answer was: {{ correctAnswer }}</p>
-      <button (click)="nextQuestion()">Next</button>
+<div class="quizCard" *ngIf="vocabularyQuiz.length > 0">
+  <div *ngIf='!showFinalResults' class="question">
+    <p class="fw-bold">Select the definition that matches the word:</p>
+    <h2 class="mainFont quizHeader">{{ vocabularyQuiz[currentQuestionIndex].word }}</h2>
+    <ul>
+      <li class="secondaryFont quizAnswer" *ngFor="let option of vocabularyQuiz[currentQuestionIndex]?.options"
+        (click)="!resultShown && submitAnswer(option)" [ngClass]="{
+              'correct': option == correctAnswer && resultShown,
+              'incorrect': option !== correctAnswer && option == currentSelection && resultShown,
+              'hidden': option !== correctAnswer && option !== currentSelection && resultShown
+            }">
+        {{ option }}
+      </li>
+    </ul>
+    <div class='result' *ngIf="resultShown">
+      <p class="secondaryFont fs-4">{{ resultMessage }}</p>
+      <button class="quizButton secondaryFont" *ngIf='resultShown' (click)="nextQuestion()">Next</button>
     </div>
   </div>
 
-  <div *ngIf="showFinalResults">
-    <p>Final Score:</p>
-    <p>{{ finalScore }}</p>
-    <button (click)="resetQuiz()">Reset Quiz</button>
-  </div>
-  
-  <div *ngIf="vocabularyQuiz?.length === 0">
-    <p>Loading Quiz</p>
-  </div>
 
+  <div class="resultsDiv" *ngIf="showFinalResults">
+    <p class="quizHeader mainFont">Final Score:</p>
+    <p class="quizHeader mainFont">{{ finalScore }}%</p>
+    <button class="quizButton" (click)="resetQuiz()">Reset</button>
+  </div>
+</div>
+<div *ngIf="vocabularyQuiz?.length === 0">
+  <p class="mainFont loading">Loading Quiz</p>
+</div>

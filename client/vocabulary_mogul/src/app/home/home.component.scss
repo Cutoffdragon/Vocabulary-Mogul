@@ -1,3 +1,11 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevents scrolling on the page */
+    width: 100%;
+    height: 100%;
+  }
+
 #heroDiv {
     position: relative;
     height: 80vh;
@@ -5,21 +13,37 @@
     border-bottom: 26px solid black;
 }
 
-#backgroundImg {
+.backgroundImg {
     position: absolute;
     z-index: 1;
     background-size: cover;
-    background-position: 'center';
     background-repeat: 'no-repeat';
     height: 100vh;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
-    animation: slide 8s linear infinite;
-    filter: blur(1px); /* Adjust blur amount as needed */
+    width: 110%;
+    z-index: 0;
+    animation: slide 24s linear infinite;
+    filter: blur(1px);
+    overflow: hidden;
 }
+
+.background-image.active {
+    opacity: 1;
+    /* Make active background fully visible */
+    z-index: 1;
+    /* Place on top of inactive image */
+    animation: slide 24s linear infinite;
+}
+
+.background-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100vh; /* Or any height you want for the main section */
+    overflow: hidden; /* Clips anything outside this container */
+  }
 
 #overlay {
     position: absolute;
@@ -28,9 +52,15 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
     height: 80vh;
     background-color: rgb(255, 255, 255, 0.5);
+    transition: all .3s ease;
+
+    &.darkened {
+        height: 100vh;
+        z-index: 3;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
 }
 
 .mainHeader {
@@ -51,36 +81,27 @@
     font-size: 1.4rem;
 }
 
-#login {
+.login {
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    z-index: 2;
-    background-color: rgb(255, 255, 255, 0.9);
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 0vh;
+    opacity: 0;
+}
+
+.login.active {
     height: 20vh;
-}
-
-.mainFont {
-    font-family: "SUSE", serif;
-    font-optical-sizing: auto;
-    font-weight: bold;
-    font-style: normal;
-}
-
-.secondaryFont {
-    font-family: "Ubuntu", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-  }
-
-.text-shadow {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    z-index: 2;
 }
 
 .quizLink {
-    transition: .5s all;
+    transition: .1s all;
+
     &:hover {
         transform: scale(1.1);
     }
@@ -89,45 +110,72 @@
 #quizAnchor {
     color: rgb(255, 255, 255);
     text-decoration: none;
-    transition: .5s all;
+    transition: .1s all;
+
     &:hover {
         color: #54FC7B;
         transform: scale(1.1);
+        cursor: pointer;
     }
 }
 
-#registerAnchor {
+.styledAnchor {
     text-decoration: none;
-    transition: .5s all;
+    transition: .1s all;
+
     &:hover {
         color: #54FC7B;
         transform: scale(1.1);
     }
-    color: rgb(82, 82, 196);
+
+    color: rgb(138, 175, 255);
 }
 
 .fade-in {
     opacity: 1;
-    transition: opacity 0.5s ease-in;
+    transition: opacity 1s ease-in;
     /* Duration for fade-in */
 }
 
-/* Fade-out effect */
-.fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-    /* Duration for fade-out */
+#exitQuizBtn {
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: 0px transparent;
+    z-index: 5;
+    position: absolute;
+    top: 14.5%;
+    left: 64.5%;
+    transform: translate(-50%, -50%);
+    transition: all .1s ease;
+
+    &:hover {
+        color: red;
+    }
 }
+
+.fillerDiv {
+    width: 50%;
+    margin: auto;
+}
+
 
 @keyframes slide {
     0% {
-        background-position: 0 0;
-        /* Start position */
-    }
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-9%); /* Slides left; adjust this for desired effect */
+      }
 
-    100% {
-        background-position: -100px 0;
-        /* End position, slide to the left */
-    }
 }
 
+@media only screen and (max-width: 1200px) {
+    
+    .fillerDiv {
+        height: 0;
+        width: 0;
+    }
+
+
+}

@@ -1,8 +1,11 @@
-<app-navbar></app-navbar>
-<div id="backgroundImg" [ngStyle]="{
-  'background-image': 'url(' + images[backgroundIndex] + ')'}" [ngClass]="fadeClass"></div>
-<div id="overlay"></div>
-<section *ngIf="pageState == 0" class="text-center d-flex align-items-center flex-row" id="heroDiv">
+
+<div class="background-wrapper">
+    <div *ngFor="let image of images; let i = index" class="backgroundImg"
+        [style.backgroundImage]="'url(' + image + ')'"
+        [ngClass]="['background-image', i === backgroundIndex ? 'active' : '', fadeClass]"></div>
+</div>
+<div id="overlay" [ngClass]="[containerState ? 'darkened' : '']"></div>
+<section class="text-center d-flex align-items-center flex-row" id="heroDiv">
     <div class="w-50 m-auto p-5">
         <h1 class="mainHeader mainFont text-shadow">Expand your Lexicon, at no cost to you. Begin your vocabulary
             journey today.</h1>
@@ -10,22 +13,31 @@
             revolutionary tool for
             writers,
             teachers, and students.</h2>
-        <h3 class="subHeader mainFont text-shadow quizLink"><a  id='quizAnchor' href="/quiz">Test Your Knowledge!</a></h3>
+        <h3 id='quizAnchor' class="subHeader mainFont text-shadow quizLink" (click)="renderQuiz('')">Test Your
+            Knowledge!</h3>
     </div>
-    <div *ngIf="pageState == 0" class="w-50 m-auto">
-
+    <div class=" fillerDiv">
     </div>
 </section>
-<section *ngIf="pageState == 0" class='text-center' id="login">
+<section [ngClass]="[!userAuthenticated ? 'active' : '']" class='text-center login'>
     <div class="d-flex flex-column">
-        <h2 class="mainFont mainHeader">Sign in for a personalized experience</h2>
-        <h3 class="subHeader mainFont"><a class="subheader" id='registerAnchor' href="/register">Don't Have an Account? Click here to Sign Up!</a></h3>
+        <h2 class="mainFont mainHeader loginText text-shadow">Sign in for a personalized experience</h2>
+        <h3 class="subHeader mainFont text-shadow styledAnchor" (click)="renderRegister()">Don't Have an Account? Click here to Sign Up!</h3>
     </div>
     <app-login></app-login>
 </section>
-
-<app-login *ngIf="!authenticationStatus && pageState == 1"></app-login>
-<app-register *ngIf="!authenticationStatus && pageState == 2"></app-register>
-<a href="user-quiz" *ngIf="authenticationStatus">User quiz</a>
-<a href="review-quiz" *ngIf="authenticationStatus">Review quiz</a>
-<button *ngIf="authenticationStatus" (click)="logout()">Log Out</button>
+<section [ngClass]="[userAuthenticated ? 'active' : '']" class="text-center login">
+    <div class="d-flex flex-column align-items-center">
+    <h2 class="mainFont mainHeader loginText text-shadow m-3">Welcome, {{ username }}!</h2>
+    <button class="quizButton secondaryFont m-3" (click)="logout()">Log Out</button>
+    </div>
+    <div class="d-flex flex-column">
+        <h3 class="subHeader mainFont text-shadow"><a class="subheader styledAnchor" href="/user-quiz">Daily
+                Vocabulary
+                Quiz</a></h3>
+        <h3 class="subHeader mainFont text-shadow mt-5"><a class="subheader styledAnchor" href="/review-quiz">ReviewVocabulary</a></h3>
+    </div>
+</section>
+<button *ngIf="containerState" id="exitQuizBtn" class="secondaryFont subHeader" (click)="endContainer()">X</button>
+<ng-container #quizContainer></ng-container>
+<app-footer></app-footer>

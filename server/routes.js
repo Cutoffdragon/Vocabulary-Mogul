@@ -1,6 +1,6 @@
 const User = require('./model.js');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 module.exports = (app) => {
@@ -58,27 +58,34 @@ module.exports = (app) => {
 
     app.post('/login', async (req, res) => {
         const { username, password } = req.body;
-
+    
         try {
             const user = await User.findOne({ username });
-
+            
+            // Check if the user exists
             if (!user) {
                 return res.status(400).json({ message: 'Invalid Username or Password' });
             }
-
-            bcrypt.compare(password, user.password, function (err, result) {
-                if (err) return console.log(err);
-                console.log(result);
-            })
-
+    
+            // Compare the password using bcrypt
+            const isMatch = await bcrypt.compare(password, user.password);
+            
+            // If password is incorrect, send an error response
+            if (!isMatch) {
+                return res.status(400).json({ message: 'Invalid Username or Password' });
+            }
+    
+            // Generate JWT token if authentication is successful
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-            return res.status(200).json({ token, username: user.username, user_id: user.id });
-
+            
+            // Send response with token
+            return res.status(200).json({ token, username: user.username, user_id: user._id });
+    
         } catch (err) {
             return res.status(500).json({ message: 'Log In failed.', error: err.message });
         }
     });
+    
 
     app.post('/vocabulary', authenticateToken, async (req, res) => {
 

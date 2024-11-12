@@ -30,6 +30,7 @@ export class UserQuizComponent implements OnInit{
   isCorrect: boolean = false;
   finalScore: number = 100;
   showFinalResults: boolean = false;
+  currentSelection : string = '';
 
   async loadVocabularyQuiz() {
     try {
@@ -58,13 +59,14 @@ export class UserQuizComponent implements OnInit{
   }
 
   submitAnswer(selectedOption: string) {
+    this.currentSelection = selectedOption
     const currentQuestion = this.vocabularyQuiz[this.currentQuestionIndex];
     this.correctAnswer = currentQuestion.correct;
     this.isCorrect = selectedOption === this.correctAnswer;
     if (this.isCorrect) this.updateVocabulary(currentQuestion['id'])
     this.resultMessage = this.isCorrect ? 'Right!' : 'Wrong!';
     this.resultShown = true;
-    this.finalScore = this.isCorrect ? this.finalScore : this.finalScore - 6.66;
+    this.finalScore = Math.round(this.isCorrect ? this.finalScore : this.finalScore - 6.66);
   }
 
   nextQuestion() {
@@ -81,6 +83,7 @@ export class UserQuizComponent implements OnInit{
     this.currentQuestionIndex = 0;
     this.resultShown = false;
     this.showFinalResults = false;
+    this.finalScore = 100;
     // Additional reset logic if necessary
   }
 

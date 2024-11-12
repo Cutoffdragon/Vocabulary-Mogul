@@ -1,6 +1,7 @@
 <section id="navbar" class="d-flex flex-row">
-    <a class="navLink secondaryFont">Home</a>
-    <a class="navLink secondaryFont">Quiz</a>
+    <a class="navLink secondaryFont" href="/">Home</a>
+    <a class="navLink secondaryFont" href="/quiz">Quiz</a>
     <a class="navLink sedcondaryFont">About</a>
-    <a class="navLink secondaryFont">Log In</a>
+    <a [ngClass]="[!isAuthenticated ? 'active' : '']" class="navLink secondaryFont authLink" href="/">Log In</a>
+    <a [ngClass]="[isAuthenticated ? 'active' : '']" class="navLink secondaryFont authLink" (click)="logOut()">Log Out</a>
 </section>

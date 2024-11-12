@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 import { VocabularyList } from '../vocab-list';
 import { QuizQuestion } from '../quiz-question';
 
@@ -16,7 +14,7 @@ import { QuizQuestion } from '../quiz-question';
   templateUrl: './review.quiz.component.html',
   styleUrl: './review.quiz.component.scss'
 })
-export class ReviewQuizComponent {
+export class ReviewQuizComponent implements OnInit{
 
   constructor(private http: HttpClient, private router: Router, private vocabularyList: VocabularyList){}
   
@@ -31,6 +29,7 @@ export class ReviewQuizComponent {
   isCorrect: boolean = false;
   finalScore: number = 100;
   showFinalResults: boolean = false;
+  currentSelection : string = '';
 
   async loadVocabularyQuiz() {
     try {
@@ -59,12 +58,13 @@ export class ReviewQuizComponent {
   }
 
   submitAnswer(selectedOption: string) {
+    this.currentSelection = selectedOption
     const currentQuestion = this.vocabularyQuiz[this.currentQuestionIndex];
     this.correctAnswer = currentQuestion.correct;
     this.isCorrect = selectedOption === this.correctAnswer;
     this.resultMessage = this.isCorrect ? 'Right!' : 'Wrong!';
     this.resultShown = true;
-    this.finalScore = this.isCorrect ? this.finalScore : this.finalScore - 6.66;
+    this.finalScore = Math.round(this.isCorrect ? this.finalScore : this.finalScore - 6.66);
   }
 
   nextQuestion() {
@@ -72,7 +72,6 @@ export class ReviewQuizComponent {
     if (this.currentQuestionIndex < this.vocabularyQuiz.length - 1) {
       this.currentQuestionIndex++;
     } else {
-      // Handle end of quiz, perhaps by resetting or showing a final score
       this.showFinalResults = true;
     }
   }
@@ -81,7 +80,7 @@ export class ReviewQuizComponent {
     this.currentQuestionIndex = 0;
     this.resultShown = false;
     this.showFinalResults = false;
-    // Additional reset logic if necessary
+    this.finalScore = 100;
   }
 
 }

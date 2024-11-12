@@ -5,21 +5,6 @@
 
 }
 
-input {
-    width: 24rem;
-    height: 3rem;
-    margin: 15px;
-    border: 4px solid black;
-    border-radius: 36px;
-    text-align: center;
-    font-size: 1.5rem;
-    transition: .5s all;
-    &:hover {
-        background-color: #c2ecff;
-        transform: scale(1.1);
-    }
-}
-
 .formInputs {
     display: flex;
     flex-direction: row;
@@ -29,11 +14,15 @@ label {
     font-size: 2rem;
 }
 
+input {
+    margin-inline: 15px;
+}
+
 #loginButton {
     background: transparent;
     border: transparent;
     font-size: 2rem;
-    color: rgb(82, 82, 196);
+    color: rgb(138, 175, 255);
     transition: .5s all;
     &:hover {
         color: #54FC7B;
@@ -41,8 +30,14 @@ label {
     }
 }
 
-.secondaryFont {
-    font-family: "Ubuntu", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-  }
+@media only screen and (max-width: 1200px) {
+
+    .formInputs, #loginForm{
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-size: 1rem;
+    }
+}

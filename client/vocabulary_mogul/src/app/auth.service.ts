@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './environments/environment';
 import { AuthModel } from './auth.model';
 import { catchError } from 'rxjs/operators';
-import { throwError, Subject } from 'rxjs';
+import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { VocabularyList } from './vocab-list';
 import { PLATFORM_ID } from '@angular/core'; // Import PLATFORM_ID
@@ -17,7 +17,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class AuthenticationService {
 
   private apiURL = environment.apiURL;
-  isAuthenticated = false;
+  isAuthenticated : boolean = false;
   platformId = inject(PLATFORM_ID);  // Inject the platformId
   private token = ''
 
@@ -39,6 +39,7 @@ export class AuthenticationService {
       .pipe(
         catchError(err => {
           console.error('Error during registration:', err);
+          window.alert('Username is taken. Please try again.')
           return throwError(err);  // Re-throw the error if needed
         })
       )
@@ -49,7 +50,7 @@ export class AuthenticationService {
           localStorage.setItem('user_id', res.user_id)
           this.isAuthenticated = true;
           console.log('Registration successful:', res);
-          this.router.navigate(['/'])
+          this.reloadPage();
         }
       );
 
@@ -75,6 +76,7 @@ export class AuthenticationService {
       .pipe(
         catchError(err => {
           console.error('Error during Login:', err);
+          window.alert('Invalid Username or Password')
           return throwError(err);  // Re-throw the error if needed
         })
       )
@@ -85,7 +87,7 @@ export class AuthenticationService {
           localStorage.setItem('user_id', res.user_id)
           this.isAuthenticated = true;
           console.log('Login successful:', res);
-          this.router.navigate(['/'])
+          this.reloadPage()
         }
       );
   }
@@ -93,11 +95,15 @@ export class AuthenticationService {
   logout(): void {
     localStorage.clear();
     this.isAuthenticated = false; // Update local status
-    this.router.navigate(['/']); // Redirect to login page
+    this.reloadPage();
   }
 
   public get loggedIn(): boolean {
     return localStorage.getItem('token') !== null;
   }
+
+  reloadPage() {
+    window.location.reload();
+ }
 
 }
