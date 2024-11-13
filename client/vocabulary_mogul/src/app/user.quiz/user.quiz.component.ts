@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -18,6 +18,14 @@ import { QuizQuestion } from '../quiz-question';
 export class UserQuizComponent implements OnInit{
 
   constructor(private http: HttpClient, private router: Router, private vocabularyList: VocabularyList){}
+
+  @Input() endContainerHandler!: () => void;
+
+  endContainer() {
+    if (this.endContainerHandler) {
+      this.endContainerHandler();
+    }
+  }
   
 
   private apiURL = environment.apiURL;

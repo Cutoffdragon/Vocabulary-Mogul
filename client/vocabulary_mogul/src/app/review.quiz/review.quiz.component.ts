@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -17,6 +17,14 @@ import { QuizQuestion } from '../quiz-question';
 export class ReviewQuizComponent implements OnInit{
 
   constructor(private http: HttpClient, private router: Router, private vocabularyList: VocabularyList){}
+
+  @Input() endContainerHandler!: () => void;
+
+  endContainer() {
+    if (this.endContainerHandler) {
+      this.endContainerHandler();
+    }
+  }
   
 
   private apiURL = environment.apiURL;
@@ -34,6 +42,11 @@ export class ReviewQuizComponent implements OnInit{
   async loadVocabularyQuiz() {
     try {
       this.vocabularyQuiz = await this.vocabularyList.getVocabularyQuiz(this.userQuizObject);
+      if(this.vocabularyQuiz.length === 0) {
+        window.alert('You have not learned any words yet. Try the user vocabulary quiz a few times first!');
+        window.location.reload();
+      }
+
     } catch (error) {
       console.error('Error loading vocabulary quiz:', error);
     }
@@ -52,7 +65,7 @@ export class ReviewQuizComponent implements OnInit{
   
     } catch (err) {
       // Log the error for debugging and navigate away if something goes wrong
-      console.error('Error during registration:', err);
+      console.error('Error fetching quiz', err);
       this.router.navigate(['/']);
     }
   }

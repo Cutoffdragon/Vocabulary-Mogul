@@ -39,5 +39,15 @@ input {
 
     label {
         font-size: 1rem;
+        margin: 20px;
+    }
+
+    
+}
+
+@media only screen and (max-width: 700px) {
+
+    label {
+        margin: 10px;
     }
 }

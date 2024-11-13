@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuizQuestion } from '../quiz-question';
 import { VocabularyList } from '../vocab-list';
@@ -13,6 +13,14 @@ import { VocabularyList } from '../vocab-list';
 export class QuizComponent implements OnInit{
 
   constructor(private vocabularyList: VocabularyList) {}
+
+  @Input() endContainerHandler!: () => void;
+
+  endContainer() {
+    if (this.endContainerHandler) {
+      this.endContainerHandler();
+    }
+  }
 
 
   vocabularyQuiz: QuizQuestion[] = [];

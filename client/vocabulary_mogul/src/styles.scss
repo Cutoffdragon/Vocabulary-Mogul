@@ -105,6 +105,7 @@ body, html {
     width: 8rem;
     height: 3rem;
     font-size: 1.6rem;
+    margin: 30px;
 
     &:hover {
         transform: scale(1.1);
@@ -134,7 +135,107 @@ input {
     }
 }
 
-@media only screen and (max-width: 1200px) {
+#exitQuizBtn {
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: 0px transparent;
+    z-index: 5;
+    position: absolute;
+    top: 2%;
+    right: 4%;
+    transition: all .1s ease;
+    font-size: 2.5em;
 
+    &:hover {
+        color: red;
+    }
+}
+
+@media only screen and (max-width: 1600px) {
+
+    .quizButton {
+        margin-inline: auto;
+    }
+
+}
+
+@media only screen and (max-width: 1250px) {
+
+    .quizCard {
+        width: 30rem;
+        height: 50rem;
+    }
+
+    .quizHeader {
+        font-size: 2rem;
+    }
+
+    .quizAnswer {
+        font-size: 1.2rem;
+    }
+
+    #exitQuizBtn {
+        font-size: 1.5em;
+    }
+
+}
+
+@media only screen and (max-height: 850px) {
+
+    input {
+        width: 16rem;
+        height: 2.5rem;
+
+    }
+
+    .quizButton {
+        width: 5rem;
+        height: 2.2rem;
+        font-size: 1rem;
+    }
+
+}
+
+@media only screen and (max-width: 800px) {
+
+    input {
+        width: 16rem;
+        height: 2.5rem;
+
+    }
+
+}
+
+@media only screen and (max-width: 700px){
+
+    .quizButton {
+        width: 5rem;
+        height: 2.2rem;
+        font-size: 1rem;
+    }
+
+    .quizCard {
+        width: 20rem;
+        height: 30rem;
+    }
+
+    .quizHeader {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+    }
+
+    .quizAnswer {
+        font-size: 1rem;
+        margin: 20px auto 20px auto;
+    }
     
+}
+
+@media only screen and (max-width: 500px) {
+
+    .quizCard {
+        height: 40rem;
+    }
+
 }

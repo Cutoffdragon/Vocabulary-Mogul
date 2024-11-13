@@ -10,3 +10,22 @@
 a {
     text-decoration: none;
 }
+
+@media only screen and (max-width: 1200px) {
+
+    .footerText {
+        font-size : 2rem;
+        width: 50%;
+    }
+
+}
+
+@media only screen and (max-width: 700px) {
+    .footerText {
+        font-size : 1rem;
+    }
+
+    #footer {
+        height: 12vh;
+    }
+}

@@ -2,6 +2,7 @@
   <div *ngIf="vocabularyQuiz?.length === 0">
     <p class="mainFont loading">Loading Quiz</p>
   </div>
+  <button id="exitQuizBtn" class="secondaryFont subHeader" (click)="endContainer()">X</button>
   <div *ngIf='!showFinalResults' class="question">
     <p class="fw-bold">Select the definition that matches the word:</p>
     <h2 class="mainFont quizHeader">{{ vocabularyQuiz[currentQuestionIndex].word }}</h2>

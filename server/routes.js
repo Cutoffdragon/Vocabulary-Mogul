@@ -165,7 +165,7 @@ module.exports = (app) => {
             // Step 2: Check if correctGuesses has reached 10
             const updatedWord = updatedUser.currentVocabulary.find(word => word.id === wordId);
 
-            if (updatedWord.correctGuesses >= 10) {
+            if (updatedWord.correctGuesses >= 5) {
                 // Step 2a: Remove the completed word from currentVocabulary
                 await User.updateOne(
                     { _id: req.headers.user_id },

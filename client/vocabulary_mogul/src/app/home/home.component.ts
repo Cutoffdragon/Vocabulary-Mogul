@@ -1,10 +1,9 @@
-import { Component, OnInit, Inject, OnDestroy, ChangeDetectorRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ChangeDetectorRef, ViewChild, ViewContainerRef, ComponentFactoryResolver, } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { interval, Subscription } from 'rxjs';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
 import { AuthenticationService } from '../auth.service';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { PLATFORM_ID } from '@angular/core'; // Import PLATFORM_ID
 import { isPlatformBrowser } from '@angular/common';
@@ -85,13 +84,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.containerState = true;
     if(this.quizContainer) this.quizContainer.clear();
 
+    let componentRef;
+
     quizType == 'user' ? (
-      this.quizContainer.createComponent(UserQuizComponent)
+      componentRef = this.quizContainer.createComponent(UserQuizComponent)
     ) : quizType == 'review' ? (
-      this.quizContainer.createComponent(ReviewQuizComponent)
+      componentRef = this.quizContainer.createComponent(ReviewQuizComponent)
     ) : (
-      this.quizContainer.createComponent(QuizComponent)
+      componentRef = this.quizContainer.createComponent(QuizComponent)
     )
+
+    if (componentRef) {
+      componentRef.instance.endContainerHandler = this.endContainer.bind(this);
+    }
   }
 
   renderRegister() {
