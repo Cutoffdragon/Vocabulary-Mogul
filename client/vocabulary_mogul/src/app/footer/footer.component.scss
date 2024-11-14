@@ -11,13 +11,12 @@ a {
     text-decoration: none;
 }
 
-.footerText{
-}
 
 @media only screen and (max-width: 1600px) {
 
     #footer {
         background-color: rgba(0, 0, 0, 0.9);
+        height: 10vh;
     }
 }
 
