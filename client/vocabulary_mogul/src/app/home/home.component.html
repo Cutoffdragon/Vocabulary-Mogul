@@ -7,13 +7,13 @@
 <div id="overlay" [ngClass]="[containerState ? 'darkened' : '']"></div>
 <section class="text-center d-flex align-items-center flex-row" id="heroDiv">
     <div class="heroSubDiv">
-        <h1 class="mainHeader mainFont text-shadow">Expand your Lexicon, at no cost to you. Begin your vocabulary
+        <h1 class="mainHeader mainFont text-shadow fade-in-animation">Expand your Lexicon, at no cost to you. Begin your vocabulary
             journey today.</h1>
-        <h2 class="subHeader mainFont text-shadow" id="mainSubHeader">With over 500 complex vocabulary words, Vocabulary Mogul is a
+        <h2 class="subHeader mainFont text-shadow fade-in-animation" id="mainSubHeader">With over 500 complex vocabulary words, Vocabulary Mogul is a
             revolutionary tool for
             writers,
             teachers, and students.</h2>
-        <h3 id='quizAnchor' class="subHeader mainFont text-shadow quizLink" (click)="renderQuiz('')">Test Your
+        <h3 id='quizAnchor' class="subHeader mainFont text-shadow quizLink fade-in-animation" (click)="renderQuiz('')">Test Your
             Knowledge!</h3>
     </div>
     <div class=" fillerDiv">
@@ -21,19 +21,19 @@
 </section>
 <section [ngClass]="[!userAuthenticated ? 'active' : '']" class='text-center login'>
     <div class="d-flex flex-column">
-        <h2 class="mainFont mainHeader loginText text-shadow">Sign in for a personalized experience</h2>
-        <h3 class="subHeader mainFont text-shadow styledAnchor" (click)="renderRegister()">Don't Have an Account? Click here to Sign Up!</h3>
+        <h2 class="mainFont mainHeader loginText text-shadow fade-in-animation2">Sign in for a personalized experience</h2>
+        <h3 class="subHeader mainFont text-shadow styledAnchor fade-in-animation2" (click)="renderRegister()">Don't Have an Account? Click here to Sign Up!</h3>
     </div>
     <app-login></app-login>
 </section>
 <section [ngClass]="[userAuthenticated ? 'active' : '']" class="text-center login">
     <div class="d-flex flex-column align-items-center">
-    <h2 class="mainFont mainHeader loginText text-shadow m-3">Welcome, {{ username }}!</h2>
-    <button class="quizButton secondaryFont m-3" (click)="logout()">Log Out</button>
+    <h2 class="mainFont mainHeader loginText text-shadow m-3 fade-in-animation2">Welcome, {{ username }}!</h2>
+    <button class="quizButton secondaryFont m-3 fade-in-animation2" (click)="logout()">Log Out</button>
     </div>
     <div class="d-flex flex-column">
-        <h3 class="subHeader mainFont text-shadow styledAnchor" (click)="renderQuiz('user')">User Vocabulary Quiz</h3>
-        <h3 class="subHeader mainFont text-shadow mt-5 styledAnchor" (click)="renderQuiz('review')">Review Vocabulary</h3>
+        <h3 class="subHeader mainFont text-shadow styledAnchor fade-in-animation2" (click)="renderQuiz('user')">User Vocabulary Quiz</h3>
+        <h3 class="subHeader mainFont text-shadow mt-5 styledAnchor fade-in-animation2" (click)="renderQuiz('review')">Review Vocabulary</h3>
     </div>
 </section>
 <ng-container #quizContainer></ng-container>

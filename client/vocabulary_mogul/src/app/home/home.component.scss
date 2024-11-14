@@ -68,7 +68,7 @@ body {
     right: 0;
     bottom: 0;
     height: 80vh;
-    background-color: rgb(255, 255, 255, 0.5);
+    background-color: rgb(255, 255, 255, 0.7);
     transition: all .3s ease;
 
     &.darkened {
@@ -138,18 +138,6 @@ body {
     }
 }
 
-.styledAnchor {
-    text-decoration: none;
-    transition: .1s all;
-
-    &:hover {
-        color: #54FC7B;
-        transform: scale(1.1);
-    }
-
-    color: rgb(138, 175, 255);
-}
-
 .fade-in {
     opacity: 1;
     transition: opacity 1s ease-in;
@@ -176,8 +164,12 @@ body {
 
 @media only screen and (max-width: 1600px) {
 
-    .background-image {
-        height: 65vh;
+    .background-image, .background-wrapper {
+        height: 140vh;
+    }
+
+    #overlay {
+        height: 90vh;
     }
 
     .fillerDiv {
@@ -188,8 +180,7 @@ body {
 
     #heroDiv {
         width: 100%;
-        height: 65vh;
-        border-bottom: none;
+        height: 90vh;
     }
 
     .heroSubDiv {
@@ -200,7 +191,6 @@ body {
 
     .login {
         &.active {
-            background-color: black;
             height: 50vh;
         }
     }
@@ -213,11 +203,6 @@ body {
         margin: 30px;
     }
 
-
-}
-
-@media only screen and (max-width: 1600px) {
-
     #exitQuizBtn {
         font-size: 1.5rem;
         top: 13%;
@@ -225,7 +210,24 @@ body {
     }
 
 
+}
 
+@media only screen and (max-width: 900px) {
+
+    #heroDiv, .background-image, #overlay, .background-wrapper {
+        height: 65vh;
+    }
+
+    #heroDiv {
+        border-bottom: 26px solid rgba(0, 0, 0, 0.7);
+    }
+
+    .login {
+
+        &.active {
+            background-color: black;
+        }
+    }
 }
 
 @media only screen and (max-width: 700px) {
@@ -247,6 +249,16 @@ body {
         font-size: 1.5rem;
     }
 
+    #mainSubHeader {
+        height: 0;
+        width: 0;
+        animation: none;
+    }
+
+    #quizAnchor {
+        font-size: 2rem;
+    }
+
 
 }
 
@@ -265,7 +277,7 @@ body {
     .login {
 
         &.active {
-            height: 70vh;
+            height: 75vh;
         }
     }
 

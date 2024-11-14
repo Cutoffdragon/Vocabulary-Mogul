@@ -20,6 +20,18 @@ body, html {
     font-style: normal;
 }
 
+.styledAnchor {
+    text-decoration: none;
+    transition: .1s all;
+
+    &:hover {
+        color: #54FC7B;
+        transform: scale(1.1);
+    }
+
+    color: rgb(138, 175, 255);
+}
+
 .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -45,6 +57,8 @@ body, html {
     padding: 3rem;
     border-radius: 16px;
     z-index: 4;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 .quizAnswer {
@@ -149,6 +163,25 @@ input {
 
     &:hover {
         color: red;
+    }
+}
+
+.fade-in-animation {
+    opacity: 0;
+    animation: fadeInAnimation 1s ease forwards;
+}
+
+.fade-in-animation2 {
+    opacity: 0;
+    animation: fadeInAnimation 2s ease forwards;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
 
