@@ -19,10 +19,9 @@ routes(app);
 
 
 function run() {
-    const port = process.env['PORT'] || 4000;
-    app.listen(port, () => {
-        console.log(`Node Express server listening on http://localhost:${port}`);
-    });
+    app.listen(process.env.PORT, "0.0.0.0", function () {
+        console.log('Your app is listening on port ' + listener.address().port);
+      });
 }
 
 run();
