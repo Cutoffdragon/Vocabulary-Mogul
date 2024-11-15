@@ -1,5 +1,5 @@
 
 export const environment = {
     production: false,
-    apiURL: process.env['API_URL']
+    apiURL: "vocabulary-mogulserver-production.up.railway.app"
   };
