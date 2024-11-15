@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiURL: "vocabulary-mogulserver-production.up.railway.app"
+    apiURL: "https://vocabulary-mogulserver-production.up.railway.app"
   };
