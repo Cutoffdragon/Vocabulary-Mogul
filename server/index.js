@@ -19,9 +19,9 @@ routes(app);
 
 
 function run() {
-    app.listen(process.env.PORT, "0.0.0.0", function () {
-        console.log('Your app is listening on port ' + listener.address().port);
-      });
+  const listener = app.listen(process.env.PORT, "0.0.0.0", function () {
+    console.log('Your app is listening on port ' + listener.address().port);
+  });
 }
 
 run();
