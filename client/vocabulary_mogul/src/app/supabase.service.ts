@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
 import { VocabularyDefinition } from './vocab-definition';
+import { environment } from './environments/environment';
 
-const supabaseUrl = 'https://fuekajjwvylrbmrjuqqn.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ1ZWthamp3dnlscmJtcmp1cXFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM4NjAwMjgsImV4cCI6MjAzOTQzNjAyOH0.GZlkJocod6F6hRUDbVqFsrZKXaruG6FaJ4lZguMHBGI';
+const supabaseUrl = environment.supabaseURL;
+const supabaseKey = environment.supabaseKey;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 @Injectable({
