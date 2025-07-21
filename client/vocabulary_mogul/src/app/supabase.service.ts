@@ -13,6 +13,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export class SupabaseService {
 
   async getVocabularySubset(numArray: number[]): Promise<VocabularyDefinition[]> {
+
     const { data, error } = await supabase
       .from('Vocabulary')
       .select('*')

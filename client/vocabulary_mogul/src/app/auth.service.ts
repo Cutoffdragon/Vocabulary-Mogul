@@ -32,7 +32,7 @@ export class AuthenticationService {
 
 
   register(username: string, password: string) {
-    const userVocab = this.vocabularyList.generateVocabularyNumbers(15, 562)
+    const userVocab = this.vocabularyList.generateVocabularyNumbers(15, 718)
     const authData: AuthModel = { username: username, password: password, userVocab: userVocab };
 
     this.http.post<{ token: string, username: string, user_id: string }>(`${this.apiURL}/register`, authData)
