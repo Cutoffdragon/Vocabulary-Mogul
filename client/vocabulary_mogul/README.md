@@ -1,27 +1,81 @@
-# VocabularyMogul
+# ✏️ Vocabulary Mogul
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.5.
+**Full stack vocabulary application that allows users to expand their lexicon for free.**
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🧾 Description
 
-## Code scaffolding
+Vocabulary Mogul allows users to sign up for a personalized vocabulary learning experience.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Using supabase and MongoDB, Vocabulary Mogul generates a unique set of vocabulary words for each user to learn.
+Once you exhibit mastery over the memorization of these words definitions, move on to new words.
+If needed, you may review old words you have mastered, so they always stay fresh in your mind.
 
-## Build
+Just visiting? No need to create an account, just take a quick randomly generated vocabulary quiz, and enjoy your stay.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🚀 Live Demo
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+🌐 [Visit Vocabulary Mogul Live](https://vocabulary-mogulclient-production.up.railway.app)
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🛠️ Tech Stack
 
-## Further help
+**Frontend:**
+- Angular
+- SASS (CSS Preprocessor)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Backend:**
+- Node.js
+- Express.js
+- MongoDB
+- Supabase
+
+**Tools:**
+- Railway (Deployment)
+- GitHub
+- JSON Web Token for authentication
+- Supabase client to provide dynamic vocabulary and definitions
+
+---
+
+## ✨ Features
+
+- ✅ Register / Log In / Log Out for a personalized vocabulary experience
+- 🖊️ Obtain mastery in the memorization of a unique set of esoteric vocabulary assigned to you
+- 🧠 Continuously learn new words as you master them. Vocabulary Mogul has over 700 words in the database.
+- 🐘 Review previously memorized words, so they always remain fresh in your mind.
+- 👟 Take a quick, randomly generated vocabulary quiz. No user authentication required.
+- 📱 Fully responsive for mobile and tablet devices
+
+---
+
+## 🧪 How to Run Locally
+
+```bash
+# Clone the central repository
+git clone https://github.com/Cutoffdragon/Vocabulary-Mogul.git
+
+# Install client dependencies
+cd client/vocabulary_mogul
+npm install
+
+#... And run the client
+ng serve
+
+
+# Install server dependencies and start the server
+cd server
+npm install
+npm start
+
+```
+
+## 🧙 About the Author
+
+Created by Jason LaGrasse — Full-stack developer and problem-solver ||
+The future of web development starts here ||  
+Portfolio: [cutoffdragon.com](https://cutoffdragon.com)  
